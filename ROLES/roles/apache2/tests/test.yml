@@ -1,0 +1,5 @@
+---
+- hosts: node2
+  remote_user: vagrant
+  roles:
+    - apache2

@@ -1,0 +1,20 @@
+---
+-   name: Check status of service and notify if down.
+    hosts: all
+    become: yes
+    tasks:
+    -   name: service check status
+        command: service nginx status
+        register: service_result
+    -   name: Email the output
+        mail:
+          # host: 127.0.0.1
+          # port: 2025
+          username: sunilchkthy@gmail.com
+          password: ayyappa@123
+          to: sunil.chkthy18@outlook.com
+          subject: nginx service alert
+          body: nginx service is down
+        delegate_to: localhost
+
+        when: service_result.stdout.find('active') != -1

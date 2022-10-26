@@ -1,0 +1,14 @@
+---
+- name: Ansible set_fact variable creation with lists
+  hosts: localhost
+  tasks:
+    - name: Create variable list using set_fact
+      set_fact:
+        Continent: ["Asia","Africa","Europe","North America","South America","Antractica","Australia"]
+        Countries: ['India', 'Japan', 'Norway', 'Netherlands', 'Switzerlands', 'Germany', 'USA']
+
+    - name: Print data1
+      debug: msg="{{Continent}}"
+    - name: Print data2
+      debug: msg="{{Countries}}"
+

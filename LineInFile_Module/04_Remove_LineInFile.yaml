@@ -1,0 +1,13 @@
+---
+- name: example4
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Remove line or string matching in the file
+      tags: example4
+      lineinfile:
+        path: /etc/apache2/test-apache2.conf 
+        # String to search
+        regexp: "Require user [Ss]unil"
+        state: absent
+        backup: yes

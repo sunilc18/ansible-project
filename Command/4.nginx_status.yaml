@@ -1,0 +1,10 @@
+---
+- name: Nginx status
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: Check the nginx configuration
+      register: nginxout
+      command: "nginx -t"
+      when: ansible_hostname == "node1"
+    

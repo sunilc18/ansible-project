@@ -1,0 +1,10 @@
+--- 
+- name: list files using command module
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: list files
+      register: list_file
+      command: ls -lrt /etc/mysql
+    - debug: msg="{{list_file.stdout_lines}}"
+    

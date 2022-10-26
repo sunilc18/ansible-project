@@ -1,0 +1,16 @@
+---
+-   name: Create of user and groups
+    hosts: all
+    become: yes
+    tasks:
+    -   name: Create group
+        group:
+            name: myadmin_group
+            state: present
+    -   name: Create user account
+        user:
+            name: ayyappa
+            uid: 1051
+            group: myadmin_group
+
+    

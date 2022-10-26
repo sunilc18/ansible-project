@@ -1,0 +1,11 @@
+---
+- name: Example01 of Replace module using regexp
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Replace line/string in the file
+      replace:
+        path: '/etc/apache2/apache2.conf'
+        regexp: '(^ServerName\s)(.*)'
+        replace: '\1www.olddomain.com'
+        backup: yes

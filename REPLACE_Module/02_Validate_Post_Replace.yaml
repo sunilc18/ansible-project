@@ -1,0 +1,12 @@
+---
+- name: Example02 of Replace module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Replace the string/line and Validate
+      replace: 
+        path: "/etc/apache2/apache2.conf"
+        regexp: '(^ServerName\s)(.*)'
+        replace:  '\1www.sunilc.com'
+        backup: yes
+        validate: apachectl -f %s -t

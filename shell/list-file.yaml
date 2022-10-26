@@ -1,0 +1,9 @@
+---
+- name: list file in remote node
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: using command module
+      register: file_list
+      shell: ls -lrt /etc/mysql/conf.d |awk '{print $9}'
+    - debug: msg="{{ file_list.stdout_lines }}"

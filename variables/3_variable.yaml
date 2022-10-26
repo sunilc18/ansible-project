@@ -1,0 +1,19 @@
+---
+-   
+    name: Variable task 3
+    hosts: all
+    vars:
+      car_model: 'audi x3'
+      country: 'India'
+      title: 'Devops engineer'
+    become: yes
+    tasks:
+    -
+        name: 'Print my car model'
+        command: 'echo "My car model is {{ car_model }}"'
+    -    
+        name: 'Print my country'
+        command: 'echo "i live in {{ country }}"'
+    -
+        name: 'Print my job title'
+        command: 'echo "I works as an {{ title }}"'

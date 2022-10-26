@@ -1,0 +1,9 @@
+---
+-   name: Search for line in file and rename.
+    hosts: all
+    become: yes
+    tasks:
+    -   name: Changes statement inside file
+        lineinfile:
+            path: /home/vagrant/apache.txt
+            line: "Checked web service is up and running"

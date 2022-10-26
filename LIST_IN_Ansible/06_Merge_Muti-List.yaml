@@ -1,0 +1,13 @@
+---
+- name: Merge Multi-List
+  hosts: localhost
+  tasks:
+    - name: Create a list
+      set_fact:
+        Numbers: [1, 2, 3, 4, 5]
+        UserRecords: [{ "name": "Sunil", "mobile": "9731269278" }, { "name": "Anil", "mobile": "9731269270" }]
+        Strings: ['Test1', 'Test2', 'Test3']
+      
+    - name: Merging Ansible Lists
+      debug:
+        msg: "{{ Numbers + UserRecords + Strings  }}"

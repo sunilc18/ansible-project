@@ -1,0 +1,15 @@
+---
+- name: Shell with Pipe and Redirection in Command
+  hosts: all
+  become: yes
+  tasks:
+    - name: Dir list and write to file
+      shell: "ls -lrt /home/vagrant|awk '{print $9}'|sed '/^$/d' > /tmp/dirlist.txt"
+      register: lsout
+      tags: lsout
+    
+    - name: Display the file
+      shell: cat /tmp/dirlist.txt
+      register: displaylist
+    
+    - debug: msg="{{ displaylist.stdout_lines }}"

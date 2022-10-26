@@ -1,0 +1,15 @@
+---
+- name: Sync push executed on source node "{{ groups['PRD'][0] }}"
+  hosts: "{{ groups['PRD'][1] }}"
+  become_user: vagrant
+  tasks:
+    - name: Sync push from node1 to node2
+      tags: sync-push
+      synchronize:
+        src: "{{ item }}"
+        dest: "/tmp/"
+        mode: push
+      delegate_to: "{{ groups['PRD'][0] }}"
+      register: syncfile
+      with_items:
+        - "/home/vagrant/remote_folder/file3.txt"

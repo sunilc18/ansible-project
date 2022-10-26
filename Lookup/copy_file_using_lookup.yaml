@@ -1,0 +1,10 @@
+---
+- name: Copy file using Anisble lookup module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Copying the Authrozed key to the remote nodes
+      authorized_key:
+        user: vagrant
+        state: present
+        key: "{{lookup('file', '~/.ssh/id_rsa.pub')}}"

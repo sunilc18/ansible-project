@@ -1,0 +1,11 @@
+---
+-
+      name: Lineinfile task
+      hosts: all
+      become: yes
+      tasks:
+      -   name: Write an entry to the file
+          lineinfile:
+            path: /home/vagrant/apache.txt
+            line: 'dns_server 10.0.0.1'
+          

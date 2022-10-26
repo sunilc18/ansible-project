@@ -1,0 +1,10 @@
+---
+- name: With Item practice with dictionary
+  hosts: localhost
+  become: yes
+  tasks:
+    - name:
+      apt:  name='{{ item.name }}' state='{{ item.state }}'
+      with_items:
+        - name: nginx
+          state: absent

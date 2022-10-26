@@ -1,0 +1,14 @@
+---
+- name: Example02 of Map filter
+  hosts: localhost
+  vars:
+    servers:
+      - "Appserver01"
+      - "Appserver02"
+      - "Appserver03"
+      - "Appserver04"
+      - "Appserver05"
+  tasks:
+    - name: Append the Domain name to the end
+      debug:
+        msg="{{ servers | map('lower') | map('regex_replace','^(.+)$','\\1.gritfy.io') | list }}"

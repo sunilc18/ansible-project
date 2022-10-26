@@ -1,0 +1,18 @@
+---
+- name: Numbers List
+  hosts: localhost
+  tasks:
+    - name: Creating Empty Facts/Vars
+      set_fact:
+        Numbers: []
+    - name: Adding Numbers to the empty list
+      set_fact:
+        Numbers: "{{ Numbers + [1, 2, 3, 4, 5] }}"
+    - name: Print List
+      debug: var=Numbers
+    - name: find the max value
+      debug:
+        msg: "Biggest Number in the list is: {{ Numbers | max }}"
+    - name: find the min value
+      debug:
+        msg: "Smallest Number in the list is: {{ Numbers | min }}"

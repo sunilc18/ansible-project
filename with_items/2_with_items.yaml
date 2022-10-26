@@ -1,0 +1,9 @@
+---
+-   name: With items practice
+    hosts: localhost
+    tasks:
+      -   name: 'Echo name using loop'
+          command: 'echo "{{ item }}"'
+          with_items:
+            -  sunil
+            -  ayyappa

@@ -1,0 +1,20 @@
+---
+- name: Create EC2 Instances
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get Info Block
+      block:
+        - name: Get Running instance Info
+          ec2_instance_facts:
+            region: us-east-2
+          register: ec2info 
+
+        - name: Print info
+          debug: msg="{{item.instance_id}}"
+          # debug: msg="{{item.state}}"
+          with_items: "{{ec2info.instances}}"
+          # debug: var="ec2info.instances"
+             
+
+    

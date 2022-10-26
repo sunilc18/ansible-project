@@ -1,0 +1,13 @@
+---
+- name: Install latest version of package
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Latest version of openssl
+      apt:
+        name: openssl
+        state: latest
+        update_cache: yes
+      register: installopenssl
+    - debug: msg={{ installopenssl }}
+      when: installopenssl is changed

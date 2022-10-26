@@ -1,0 +1,70 @@
+---
+- name: Ansible List Examples
+  hosts: localhost
+  tasks:
+    - name: Create a Lists with Numbers, Strings and Dictionary
+      set_fact:
+        Numbers: [1,2,3,4]
+        Numbers2: [4,5,6,7,8]
+        NestedList: [1,2,[3,4],5,6]
+        UserRecords: [ {"name" : "Sarav", "MobileNo" : "9876543210", "age": "32" }, {"name" : "Hanu", "MobileNo" : "9879896210", "age" : "31" } ]
+        Strings: ['test1','test1','test3']
+
+    - name: Ansible Min filter to find Smallest number
+      debug:
+        msg: "{{ Numbers | min }}"
+
+    - name: Ansible Min filter to find Biggest number
+      debug:
+        msg: "{{ Numbers | max }}"
+      
+    - name: Filter using Attribute and finding the Min value
+      debug:
+        msg: "{{ Userrecords | min(attribute='age') }}"
+      ignore_errors: yes
+
+    - name: Ansiblepow pow filter to get the Power of number
+      debug:
+        msg: "{{ item | pow(2)}}"
+      with_items:
+        - "{{ Numbers }}"
+
+    - name: Ansible pow root filter to get the root of number
+      debug:
+        msg: "{{ item | root}}"
+      with_items:
+        - "{{ Numbers }}"
+
+    - name: Ansible get unique elements
+      debug:
+        msg: "{{ Strings | unique }}"
+
+    - name: Union of Two Lists
+      debug:
+        msg: "{{ Numbers | union(Numbers2) }}"
+
+    - name: Intersect of two lists
+      debug:
+        msg: "{{ Numbers | intersect(Numbers2) }}"
+
+    - name: Intersect of two lists
+      debug:
+        msg: "{{ Numbers | difference(Numbers2) }}"
+    
+    - name: Intersect of two lists
+      debug:
+        msg: "{{ Numbers2 | difference(Numbers) }}"
+
+    - name: Flatten the Nesteed Ansible List
+      debug:
+        msg: "{{ NestedList | flatten }}"
+      
+    - name: Shuffling the List to change the order
+      debug:
+        msg:
+          - "{{ Strings | shuffle }}"
+          - "{{ NestedList | shuffle }}"
+
+    - name: Validate variable in fact is List
+      debug:
+        msg: "{{ UserRecords | type_debug }}"

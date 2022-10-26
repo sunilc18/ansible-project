@@ -1,0 +1,24 @@
+---
+- name: Variable interpolation using Shell script
+  hosts: PRD
+  become: yes
+  vars:
+    - Dir: /home/vagrant/
+    - FileExt: "*.txt"
+    - DaysOld: 30
+  tasks:
+    - name: Copy script to the path and change the permission
+      template:
+        src: /home/vagrant/ansible-project/find.sh
+        dest: /home/vagrant/
+        mode: 0755
+        owner: vagrant  
+        group: vagrant
+
+    - name: Execute the script using Shell
+      become: true
+      shell:
+        /home/vagrant/find.sh
+      register: runscript
+    
+    - debug: var=runscript.stdout_lines

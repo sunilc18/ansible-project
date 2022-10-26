@@ -1,0 +1,11 @@
+---
+- name: Update cache after verifying
+  hosts:  localhost
+  become: yes
+  tasks:
+    - name: Ansible apt update cache if its older than 1 hour(3600 seconds)
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      register: cacheupdate 
+    - debug: msg='{{ cacheupdate }}'

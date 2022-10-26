@@ -1,0 +1,14 @@
+---
+- name: JSON Data
+  hosts: localhost
+  tasks:
+    - name: Download JSON
+      uri:
+        url: https://jsonplaceholder.typicode.com/users
+        remote_content: yes
+      register: jsoncontent
+
+    - name: Get Basic details
+      debug: msg="{{ jsoncontent.json | json_query(basicdetails) }}"
+      vars:
+        basicdetails: "[? name==`Ervin Howell`].{Name: name, EmailAddress: email, Phone: phone, Website: website}"

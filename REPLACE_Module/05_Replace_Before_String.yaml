@@ -1,0 +1,32 @@
+---
+  - name: Replace line in file examples
+    hosts: node1
+
+    handlers:
+      - name: restart apache
+        become: yes
+        become_user: root
+        service: name=httpd state=restarted
+
+    tasks:
+
+    - name: "Replacing all fox with fofo - Leaving the title untouched"
+      become: yes
+      become_user: root
+      replace: 
+        path: /var/www/html/index.html
+        regexp: '[F|f]ox'
+        replace: '<span style="color:crimson">Fox</span>'
+        before: "/h2"
+        backup: yes 
+    
+    - name: "Replacing all fox with fofo - Leaving the title untouched"
+      become: yes
+      become_user: root
+      replace: 
+        path: /var/www/html/index.html
+        regexp: '[G|g]rape'
+        replace: '<span style="color:purple"> Grape </span>'
+        before: "/h2"
+        backup: yes    
+      notify: restart apache

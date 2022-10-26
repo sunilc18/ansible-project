@@ -1,0 +1,18 @@
+---
+- name: Example03 of wait_for module
+  hosts: node1
+  become: yes
+  vars:
+    - ssh_port: 22
+  tasks:
+    - name: Validating if the ssh PORT is closed.
+      wait_for:
+        host: "{{inventory_hostname}}"
+        port: "{{ssh_port}}"
+        delay: 10
+        timeout: 30
+        state: drained
+        # msg: "Server PORT is not yet stopped" # Message will be printed during failure.
+      when: ansible_hostname == "{{inventory_hostname}}"
+      register: validation02
+      ignore_errors: true # this will NOT stop the playbook execution incase of any error of this tasks

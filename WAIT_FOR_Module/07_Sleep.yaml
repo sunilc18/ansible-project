@@ -1,0 +1,10 @@
+---
+- name: Example07 of wait_for module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Sleep Playbook 
+      wait_for:
+        delay: 30
+        timeout: 0
+        

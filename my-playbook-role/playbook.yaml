@@ -1,0 +1,4 @@
+- name: Install and configure MySQL uisng Ansible roles
+  hosts: all
+  roles:
+    - mysql

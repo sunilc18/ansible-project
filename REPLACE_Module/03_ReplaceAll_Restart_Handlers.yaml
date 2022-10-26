@@ -1,0 +1,18 @@
+---
+- name: Example3 with Replace module
+  hosts: node1
+  become: yes
+  handlers:
+    - name: restart apache
+      become_user: root
+      service: name=httpd state=restarted
+    
+  tasks:
+    - name: Replace string/line in the file
+      become_user: root
+      replace:
+        path: '/var/www/html/index.html'
+        regexp: '[F|f]ox'
+        replace: 'racoon'
+        backup: yes
+      notify: restart apache

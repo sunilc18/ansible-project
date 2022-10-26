@@ -1,0 +1,9 @@
+---
+- name: FileSytem usage
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: List the Disk space usage
+      register: disk_out
+      command: "df -h"
+    - debug: msg="{{ disk_out.stdout_lines }}"

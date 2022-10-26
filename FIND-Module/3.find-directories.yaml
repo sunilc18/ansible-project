@@ -1,0 +1,23 @@
+---
+- name: Find Module
+  hosts: node1
+  become: yes
+  vars:
+    Files: []
+  tasks:
+    - name: Find Directories using find module
+      find:
+        paths: /var/log
+        file_type: directory # To find for only directories
+        recurse: no # we don't want sub-directories
+        exclude: 'nginx,mysql'
+      register: output
+
+    - name: Adding files to the list
+      no_log: true
+      set_fact:
+        Files: "{{ Files + [item.path]}}"
+      with_items: "{{output.files}}"
+
+    - debug: var=Files
+    

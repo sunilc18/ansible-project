@@ -1,0 +1,4 @@
+# var source file
+http_port: 8081
+snmp_port: 161-162
+inter_ip_range: 127.0.0.1

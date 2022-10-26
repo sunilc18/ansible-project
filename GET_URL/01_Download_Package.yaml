@@ -1,0 +1,21 @@
+---
+- name: 
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Create Directory for Tomcat
+      file:
+        path: /opt/tomcat_new_8
+        state: directory
+        mode: 0755
+        owner: vagrant
+        group: vagrant
+
+    - name: Download Tomcat package
+      get_url:
+        checksum: sha512:b86d191506f8a647e3f4505bb7cc095068abb26bb4283562924913606514ce15930a467bd5d20c09b11d785827bf1914ed869b48dfb1c95e9f826e4c8b4e8aaa # checksume with sha value hardcoded
+        url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.75/bin/apache-tomcat-8.5.75.tar.gz
+        dest: /opt/tomcat_new_8
+        mode: 0755
+        group: vagrant
+        owner: vagrant

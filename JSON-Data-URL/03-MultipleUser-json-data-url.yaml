@@ -1,0 +1,14 @@
+---
+- name: JsonQuery Playbook
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Download JSON data play
+      uri:
+        url:  https://jsonplaceholder.typicode.com/users
+        return_content: yes
+      register: jsoncontent
+    - name: Just the Name
+      debug:  msg="{{ jsoncontent.json | json_query(jmesquery) }}"
+      vars:
+        jmesquery: "[? name==`Ervin Howell` || name==`Mrs. Dennis Schulist`].{Name: name, EmailAddress: email, Company: company.name, WebSite: website, Phone: phone}"

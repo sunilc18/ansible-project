@@ -1,0 +1,28 @@
+---
+-   name: Creating and copying the SSH key
+    hosts: all
+    become: yes
+    become_user: ayyappa
+    tasks:
+      - name: Creating SSH Key
+        shell: >
+          ssh-keygen -q -b 2048 -t rsa -N "" -C "creating SSH" -f ~/.ssh/id_rsa
+          creates="~/.ssh/id_rsa"
+      - name: Fetch the Key from nodes to Control server
+        fetch: 
+          src:  "~/.ssh/id_rsa.pub"
+          dest: "buffer/{{ansible_hostname}}-id_rsa.pub"
+          flat: yes
+      - name: Copy the file from master to the destination
+        copy: 
+          src: "buffer/{{item.dest}}-id_rsa.pub"
+          dest: "/tmp/remote-id_rsa.pub"
+        when: "{{ item.dest != ansible_hostname }}"
+        with_items:
+          - { dest: "{{groups['PRD'][2]}}" }
+          - { dest: "{{groups['PRD'][1]}}" }
+          - { dest: "{{groups['PRD'][0]}}" }
+      - name: Add the public key into Authorized_keys files to enable key Auth
+        shell: "cat /tmp/remote-id_rsa.pub >> ~/.ssh/authorized_keys"
+        register: addtoauth
+

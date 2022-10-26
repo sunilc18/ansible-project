@@ -1,0 +1,13 @@
+---
+- name: Example08 of lineinfile
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Update the ServerName 
+      lineinfile:
+        path:
+        insertafter: '# ServerName www.example.com'
+        line: "ServerName www.ayyappa.com:80"
+        state: present
+        # Command to Validate the configuration and %s is a working copy of the file
+        validate: "apache2 -t -f %s"

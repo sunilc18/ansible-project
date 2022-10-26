@@ -1,0 +1,10 @@
+---
+- name: app prequisites
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: Making sure the /tmp has more space
+      shell: "df -h /tmp|grep -v Filesystem|awk '{print $4}' | cut -d G -f1"
+      register: tmpspace
+      failed_when: "tmpspace.stdout|float <1"
+    - debug: msg="{{tmpspace.stdout}}"

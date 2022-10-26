@@ -1,0 +1,12 @@
+---
+- name: Using Vars for creating List
+  hosts: localhost
+  vars:
+    - Countries: ['India','China','USA','UK']
+    - Continent: ["Asia","Africa","Europe","North America","South America","Antarctica","Australia"]
+  tasks:
+    - name: Print Countries list
+      debug: var=Countries
+    - name: Print Countries list
+      debug: var=Continent
+

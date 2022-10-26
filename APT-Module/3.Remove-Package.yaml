@@ -1,0 +1,12 @@
+---
+- name: Uninstall an Package using APT
+  hosts: localhost
+  become: yes 
+  tasks:
+    - name: Uninstall nginx using APT
+      apt:
+        name: nginx
+        state: absent
+      register: removenginx
+    - debug: msg="{{ removenginx }}"
+      when: removenginx is changed

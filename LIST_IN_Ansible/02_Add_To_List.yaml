@@ -1,0 +1,25 @@
+---
+- name: List example02
+  hosts: localhost
+  tasks:
+    - name: Create variable list using set_fact
+      set_fact:
+        Continent: ["Asia","Africa","Europe","North America","South America","Antractica","Australia"]
+        Countries: ['India', 'Japan', 'Norway', 'Netherlands', 'Switzerlands', 'Germany', 'USA']
+        New_Countries: ['China', 'France']
+
+    - name: Print data1
+      debug: msg="{{Continent}}"
+    - name: Print data2
+      debug: msg="{{Countries}}"
+
+    - name: Add country to the Countries list
+      set_fact:
+        Countries: "{{Countries + ['UK', 'Russia']}}" # add/append items to the list.
+
+    - name: Print after adding to the list
+      debug: msg="{{Countries}}"
+
+    - name: Print new countries using merge
+      debug: msg="{{Countries + New_Countries}}" # merge two list method
+

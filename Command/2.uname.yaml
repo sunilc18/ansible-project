@@ -1,0 +1,9 @@
+---
+- name: Get OS name and version using command module
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: Get OS name and  version
+      register: uname_out
+      command: "uname -a"
+    - debug: msg="{{ uname_out.stdout_lines}}"

@@ -1,0 +1,26 @@
+---
+- name: Playbook to Download and Install tomcat8
+  hosts: PRD
+  become: yes
+  tasks:
+    -   name: Install Java
+        apt: 
+          name: openjdk-8-jre
+          state: present
+        register: "Javainstall"
+    -   name: Create Directory
+        file:
+          path: "/opt/tomcat8"
+          state: directory
+          mode: 0755
+    -   name: Download and Install Tomcat
+        unarchive: 
+          src:  "https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.49/bin/apache-tomcat-8.5.49.tar.gz"
+          dest: "/opt/tomcat8/"
+          mode: 0755
+          remote_src: yes
+        register: "tcinstall"
+    -   name: Start tomcat
+        shell: "./startup.sh"
+        args:
+          chdir: "/opt/tomcat8/apache-tomcat-8.5.49/bin"

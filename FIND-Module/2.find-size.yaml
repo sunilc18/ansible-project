@@ -1,0 +1,14 @@
+---
+- name: Find Module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Find files which are old than 30 days
+      find:
+        paths: /var/log
+        patterns: "*.log"
+        size: -100M
+      register: output
+
+    - debug: var=item.path 
+      with_items: "{{ output.files }}"

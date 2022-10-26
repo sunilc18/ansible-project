@@ -1,0 +1,12 @@
+---
+-   name: Copy and run bash script
+    hosts: all
+    become: yes
+    tasks:
+    -   name: Copying script to remote node
+        copy:
+            src: /home/vagrant/ansible-project/script/ourscript.sh
+            dest: /home/vagrant/ourscript.sh
+            mode: 0777
+    -   name: Executing the script from remote node
+        command: sh /home/vagrant/ourscript.sh

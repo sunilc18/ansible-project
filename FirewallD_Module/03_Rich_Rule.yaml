@@ -1,0 +1,14 @@
+---
+- name: Example02 of Firewalld module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Firewalld rules
+      firewalld:
+        permanent: yes
+        immediate: yes
+        rich_rule: "{{item}}"
+        state: enabled
+      with_items:
+        - 'rule service name="ftp" audit limit value="1/m" accept'
+        - 'rule service name="http" audit limit value="1/m" drop'

@@ -1,0 +1,4 @@
+[PRD]
+node1   ansible_python_interpreter=/usr/bin/python3 # this entry is needed for FirewallD module which doesn't have in python 2.x
+node2   ansible_python_interpreter=/usr/bin/python3
+node3   ansible_python_interpreter=/usr/bin/python3

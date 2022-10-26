@@ -1,0 +1,23 @@
+--- 
+- name: Example6 of LineInFile
+  hosts: node1  
+  become: yes
+  tasks:
+    - name: Comment the existing ServerAdmin line or string
+      tags: Comment_task
+      lineinfile:
+        path: /etc/apache2/apache2.conf
+        line: '# \1'
+        regexp: '(^ServerAdmin .*)'
+        backrefs: yes
+        state: present
+      register: lineinfileexample_1
+
+    - name: Add new string or line before the commented line
+      tags: add_task
+      lineinfile:
+        path: /etc/apache2/apache2.conf
+        insertbefore: '# ServerAdmin .*'
+        line: "ServerAdmin sunil.chkthy18@outlook.com"
+        state: present
+      register: lineinfileexample_2

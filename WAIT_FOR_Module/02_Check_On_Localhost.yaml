@@ -1,0 +1,16 @@
+---
+- name: Example01 of wait_for module
+  hosts: localhost
+  become: yes
+  vars:
+    - webserver_port: 21
+  tasks:
+    - name: Example02 of the wait_for module
+      local_action:
+        module: wait_for
+        host: "{{inventory_hostname}}"
+        delay: 10
+        timeout: 30
+        port: "{{webserver_port}}"
+        state: started
+        msg: "Server PORT is not open/ready" # Custom message to print during failure.

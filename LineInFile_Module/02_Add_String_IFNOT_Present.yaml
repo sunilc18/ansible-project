@@ -1,0 +1,12 @@
+---
+- name: Example2 of Lineinfile
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Add string or line if NOT found in file
+      lineinfile:
+        path: /etc/apache2/test-apache2.conf
+        backup: yes
+        line: "Auth*" # it would add entry at end of the file
+        state: present
+      register: example2out

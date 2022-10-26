@@ -1,0 +1,12 @@
+---
+- name: Delete object from S3 using Ansible
+  hosts: localhost
+  tasks:
+    - name: Delete Object
+      aws_s3:
+        bucket: sunilcbucket
+        object: "test1/test1-subfolder/test4.txt"
+        mode: delobj
+      register: deleteresult
+
+    - debug: msg="{{ deleteresult.msg }}"

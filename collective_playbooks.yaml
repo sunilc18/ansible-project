@@ -1,0 +1,4 @@
+- import_playbook: ping-pong.yaml
+- import_playbook: shell.yaml
+- import_playbook: variables/var.yaml
+- import_playbook: installing_httpd

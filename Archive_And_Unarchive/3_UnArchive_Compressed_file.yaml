@@ -1,0 +1,14 @@
+---
+-   name: Find and Archive files
+    hosts: PRD
+    become: yes
+    vars:
+      - remote_server_dest_path: "/home/vagrant"
+      - compressed_file: "unarchive.tar.gz"
+    tasks:
+      -   name: Copy and UnArchive the files
+          unarchive:
+            src: "{{ item }}"
+            dest: "{{ remote_server_dest_path }}"
+            mode: 0755
+          with_items: "{{ compressed_file }}"

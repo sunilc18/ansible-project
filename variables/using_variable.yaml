@@ -1,0 +1,12 @@
+---
+-   
+    name: Using of variables
+    hosts: all
+    become: yes
+    vars:
+      dns_server: 10.0.0.2
+    tasks:
+    -   name: Adding new dns server to the file
+        lineinfile:
+          path: /home/vagrant/apache.txt
+          line: 'new dns server {{ dns_server }}'

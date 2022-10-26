@@ -1,0 +1,25 @@
+---
+- name: Copy files between remotes using copy and fecth module
+  hosts: all
+  become: yes
+  tasks:
+    - name: Fetch friles Remote to Controller node
+      fetch:
+        src: /home/vagrant/remote_folder/file1.txt
+        dest: /tmp/
+        flat: yes
+      when: "{{ inventory_hostname == 'node1' }}"
+    - name: Copy files from Controller to node2
+      copy:
+        src:  /tmp/file1.txt
+        dest: /tmp/
+      when: "{{ item.dest != ansible_hostname }}"
+      with_items:
+          - {dest: "{{groups['PRD'][2]}}"}
+          - {dest: "{{groups['PRD'][1]}}"}
+          - {dest: "{{groups['PRD'][0]}}"}
+    - name: What is my inventory_hostname
+      debug: msg={{inventory_hostname}}
+
+    - name: What is my ansible_hostname
+      debug: var={{ansible_hostname}}  

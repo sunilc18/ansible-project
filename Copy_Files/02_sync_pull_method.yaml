@@ -1,0 +1,16 @@
+---
+- name: Sync pull task executed on destination node "{{ groups['IP'][1]}}"
+  hosts: "{{ groups['IP'][0]}}"
+  user: vagrant
+  tasks:
+    - name: Copy file from node1 to controller using Pull method
+      tags: sync-pull
+      synchronize:
+        src: "{{ item }}"
+        dest: "/tmp/"
+        mode: pull
+      delegate_to: "{{ groups['IP'][1]}}"
+      register: syncfile
+      with_items:
+        - "/home/vagrant/remote_folder/file2.txt"
+    

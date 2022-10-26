@@ -1,0 +1,24 @@
+---
+- name: 
+  hosts: localhost
+  become: yes
+  # vars:
+  #   - checksum_strength: sha512
+  #   - checksum_url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.75/src/apache-tomcat-8.5.75-src.tar.gz.sha512
+  tasks:
+    - name: Create Directory for Tomcat
+      file:
+        path: /opt/tomcat_new_8
+        state: directory
+        mode: 0755
+        owner: vagrant
+        group: vagrant
+
+    - name: Download Tomcat package
+      get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.75/bin/apache-tomcat-8.5.75.tar.gz
+        dest: /opt/tomcat_new_8
+        mode: 0755
+        checksum: sha512:https://downloads.apache.org/tomcat/tomcat-8/v8.5.75/src/apache-tomcat-8.5.75-src.tar.gz # Bug with checksum using URL
+        group: vagrant
+        owner: vagrant

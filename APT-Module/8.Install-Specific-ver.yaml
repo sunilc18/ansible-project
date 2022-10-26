@@ -1,0 +1,12 @@
+---
+- name: Ansible apt module
+  hosts: localhost
+  become: yes 
+  tasks:
+    - name: Ansible apt isntall tomcat Version 
+      register: tomcatinstall
+      apt:
+        update_cache: yes
+        name: Tomcat8=8.0.32-1ubuntu1.11
+        state: present
+      

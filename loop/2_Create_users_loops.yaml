@@ -1,0 +1,13 @@
+---
+-   name: user creation
+    hosts: all
+    become: yes
+    tasks:
+      -   user: name="{{ item.name }}" uid="{{ item.uid }}" state=absent remove=yes     
+          loop:
+            -   name: user12
+                uid: 1050
+            -   name: user23
+                uid: 1051
+            -   name: user34
+                uid: 1053

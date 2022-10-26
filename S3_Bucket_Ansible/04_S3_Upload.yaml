@@ -1,0 +1,14 @@
+---
+- name: S3 Upload
+  hosts: localhost
+  tasks:
+    - name: Upload/PUT to S3 bucket
+      aws_s3:
+        bucket: sunilcbucket
+        mode: put
+        object: "test1/test1-subfolder/log2.csv-20211101.gz"
+        src: "/home/vagrant/logs/log2.csv-20211101.gz"
+      register: "putresult"
+
+    - debug: msg="{{putresult.msg}} and the S3 Object URL is {{putresult.url}}"
+      when: putresult.changed

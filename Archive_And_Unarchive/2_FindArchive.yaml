@@ -1,0 +1,25 @@
+---
+-   name: Find and Archive files
+    hosts: localhost
+    become: yes
+    tasks:
+      -   name: Find files from the given path
+          find:
+            path:
+              - /home/vagrant/logs
+              - /home/vagrant/console
+            file_type: file
+            patterns:
+              - '.*\.txt$'
+              - '.*\.csv$'
+              - '.*\.out$'
+            use_regex: yes
+          register: output
+
+      -   name: Archive the files
+          archive:
+            path: "{{ item.path }}"
+            dest: "{{ item.path }}-{{ ansible_date_time.date.replace('-','')}}.gz"
+            format: gz
+            remove: yes
+          with_items: "{{ output.files }}"

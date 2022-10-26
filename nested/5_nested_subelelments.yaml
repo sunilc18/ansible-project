@@ -1,0 +1,23 @@
+---
+-   name: nested subelements
+    hosts: localhost
+    vars:
+      families:
+        - surname: Smith
+          children:
+            - name: Mike
+              age: 5
+            - name: Kate
+              age: 7
+        - surname: Sanders
+          children:
+            - name: Pete
+              age: 15
+            - name: Sara
+              age: 17
+    tasks:  
+      - name: 'List children'
+        debug: msg="Family='{{ item.0.surname }}' child='{{ item.1.name }}' Age='{{ item.1.age }}'"
+        with_subelements:
+          - "{{ families }}"
+          - children

@@ -1,0 +1,12 @@
+---
+- name: APT module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Remove unused packages from cache
+      apt:
+        autoclean: yes
+
+    - name: Remove dependencies that are no longer required
+      apt:
+        autoremove: yes

@@ -1,0 +1,24 @@
+---
+  - name: Replace line in file examples
+    hosts: node1
+
+    handlers:
+      - name: restart apache
+        become: yes
+        become_user: root
+        service: name=httpd state=restarted
+
+    tasks:
+    - name: "Replacing the Fox in the Story with Underline formatting"
+      become: yes
+      become_user: root
+      replace: 
+        path: /var/www/html/index.html
+        regexp: '[F|f]ox'
+        replace: '<u>Fox</u>'
+        # Matches the Start of P tag
+        after: '<p\s[.|\w|=|\"|\r|\n|\s|\-|:|;]*>' # some issue with regexp before and after
+        # Matches the End of P tag
+        before: '</p>'
+        backup: yes  
+      notify: restart apache

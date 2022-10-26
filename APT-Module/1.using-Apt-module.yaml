@@ -1,0 +1,11 @@
+---
+- name: Using APT module 
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+      register: nginxinstall
+    - debug: msg="{{ nginxinstall }}"

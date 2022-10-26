@@ -1,0 +1,15 @@
+---
+-   name: 'Print list of fruits'
+    hosts: localhost
+    become: yes
+    vars:
+      fruits:
+        - apple
+        - mango
+        - bannana
+        - ornage
+    tasks:
+      -   
+          command: 'echo "{{ item }}"'
+
+          with_items: '{{ fruits }}'

@@ -1,0 +1,15 @@
+---
+- name: Download object from AWS S3 uisng Ansible
+  hosts: localhost
+  tasks:
+    - name: Get/Download file from S3 
+      aws_s3:
+        bucket: sunilcbucket
+        mode: get
+        object: "test1/test1-subfolder/test4.txt"
+        dest: "/home/vagrant/test4.txt"
+      register: "getresult"
+
+    - debug:
+        msg="{{getresult.msg}}"
+      when: getresult.changed

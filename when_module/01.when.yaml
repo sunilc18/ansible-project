@@ -1,0 +1,9 @@
+---
+- name: "Using of when module"
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: "Shutdown debian flavoured system"
+      command: /sbin/reboot
+      when: ansible_os_family == "Debian"
+    - debug: msg="{{ ansible_nodename }}"

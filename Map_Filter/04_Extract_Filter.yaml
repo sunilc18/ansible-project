@@ -1,0 +1,21 @@
+---
+- name:  Ansible Map Extract filter
+  hosts: localhost
+  vars: 
+        employees:
+          { 
+            "sarav":{ "mobile":"985643210","email":"sarav@gritfy.com", "city":"Coimbatore" }, 
+            "hanu":{ "mobile":"7865432109","email":"hanu@gritfy.com","city":"Hyderabad" }, 
+            "gopi":{ "mobile":"9812990123","email":"gopi@gritfy.com","city":"Chennai" } 
+          }
+  tasks: 
+    - name: Task1 - Select only Sarav's records from the Dictionary or Hash table
+      debug: 
+        msg={{ ['sarav']| map('extract', employees ) }}
+    - name: Task2 - Select Hanu's record and look for his email ID using Third argument
+      debug: 
+        msg=" Hanu`s Email ID is {{ ['hanu']| map('extract', employees, 'email') | list}} "
+    
+    - name: Task3 - Select Gopi's record and look for his City using Third argument
+      debug: 
+        msg=" Gopi is residing in {{ ['gopi']| map('extract', employees, 'city') | list }} "

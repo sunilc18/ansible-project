@@ -1,0 +1,12 @@
+---
+- name: Example06 of the wait_for module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: File presence using wait_for module
+      wait_for:
+        path: /tmp/delete1.txt
+        delay: 10
+        timeout: 30
+        state: present
+        msg: "Specific file NOT created yet"

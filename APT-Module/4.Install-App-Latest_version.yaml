@@ -1,0 +1,10 @@
+---
+- name: Update-cache and install the app
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install openssl after updating cache
+      apt:
+        name: openssl
+        state:  present
+        update_cache: yes

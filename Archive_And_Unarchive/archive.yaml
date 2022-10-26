@@ -1,0 +1,16 @@
+---
+-   name: Archiving folder
+    hosts: localhost
+    become: yes
+    tasks:
+      -   name: Archive folder and its file
+          archive:
+            path:
+              - /home/vagrant/logs/*
+              - /home/vagrant/console/*
+            dest: /home/vagrant/myarchive_files.tar.gz
+            format: gz
+            exclude_path:
+              - /home/vagrant/logs/access*.txt
+              - /home/vagrant/console/access*.txt
+            remove: yes

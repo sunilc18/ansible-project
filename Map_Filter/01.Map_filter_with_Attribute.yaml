@@ -1,0 +1,54 @@
+---
+- name: Example01 of Map filter
+  hosts: localhost
+  vars:
+    names: [ {
+        "first": "Paul",
+        "last": "Thompson",
+        "mobile": "+1-234-31245543",
+        "ctc": "100000",
+        "address": {
+          "city": "LasVegas",
+          "country": "USA"
+        }
+      },
+      {
+        "first": "Rod",
+        "last": "Johnson",
+        "mobile": "+1-584-31551209",
+        "ctc": "300000",
+        "address": {
+          "city": "Boston",
+          "country": "USA"
+        }
+      },
+      {
+        "first": "Sarav",
+        "last": "AK",
+        "mobile": "+919876543210",
+        "ctc": "200000",
+        "address": {
+          "city": "Chennai",
+          "country": "India"
+        }
+      }]
+  tasks:
+    - name: Select and Extract only the cities
+      debug:
+        msg="{{ names | map(attribute='address') | map(attribute='city') | list }}"
+    - name: Select and Extract only mobile numbers
+      debug:
+        msg="{{ names | map(attribute='mobile') | list }}"
+    - name: Select Attributes Joined with Comma in Singleline(By default it returns a list)
+      debug: msg="{{ names | map(attribute='first') | join(',') }}"
+    - name: Select Attributes Joined with Comma in Singleline(By default it returns a list)
+      debug: msg="{{ names | map(attribute='last') | join(',') }}"
+    - name: Select Last Name and convert to UPPER case
+      debug:
+        msg="{{ names | map(attribute='last') | map('upper') | list }}"
+    - name: Convert CTC to float
+      debug:
+        msg="{{ names | map(attribute='ctc') | map('float') | list }}"
+    - name: Appending USD to the CTC
+      debug:
+        msg="{{ names | map(attribute='ctc') | product(['USD']) | map('join',' ') | list }}"

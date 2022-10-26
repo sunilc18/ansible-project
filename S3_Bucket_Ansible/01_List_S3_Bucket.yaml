@@ -1,0 +1,12 @@
+---
+- name: AWS S3 Bucket list - Ansible
+  hosts: localhost
+  tasks:
+    - name: List keys or objects
+      aws_s3:
+        # profile: <name> # configured on our localmachine with AWS CLI. In my case i used export cmd.
+        bucket: sunilcbucket
+        mode: list
+      register: listresult
+
+    - debug: msg="{{listresult.s3_keys}}"

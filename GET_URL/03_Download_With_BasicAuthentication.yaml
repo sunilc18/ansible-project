@@ -1,0 +1,27 @@
+---
+- name: Download protected file
+  hosts: node1
+  tasks: 
+    - name: Access the website and check the website is live
+      uri:
+        url: http://localhost/admin/secure.txt
+        status_code: 200
+      register: validateURL
+
+    - name: HTTP response for the URL
+      debug: var=validateURL.msg
+    
+    - name: Access URL with username and password
+      get_url:
+        url: http://node1/admin/secure.txt
+        url_password: vagrant
+        url_username: vagrant
+        dest: /tmp/secure.txt
+
+    - name: Display the File content
+      shell:
+        cat /tmp/secure.txt
+      register: shellout
+
+    - name: Display the file content
+      debug: var=shellout.stdout_lines

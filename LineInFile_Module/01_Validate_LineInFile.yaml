@@ -1,0 +1,14 @@
+---
+- name: LineInFile Module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Validate if a String or Line present in a file
+      tags: example1
+      lineinfile:
+        path: /etc/apache2/apache2.conf
+        line: "Require user vagrant"
+        state: present
+        backup: yes
+      check_mode: yes # running in check_mode and doesn't make any changes.
+      register: exampleout

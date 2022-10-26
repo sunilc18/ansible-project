@@ -1,0 +1,26 @@
+---
+- name: Test filter
+  hosts: localhost
+  vars: 
+    numbers: ['10','20','30']
+    names: [ 
+      {
+        "first": "Sarav",
+        "last": "AK",
+        "mobile": "+919876543210",
+        "ctc": "200000",
+        "address": {
+          "city": "Chennai",
+          "country": "India"
+        }
+      }]
+  tasks:
+    - name: Ansible Select vs SelectAttr
+      debug:
+        msg:
+          - "With SelectAttr - Filter"
+          - "{{names | selectattr('first','eq','Sarav') | list}}"
+          - "With Select - Filter"
+          - "{{numbers | select('ge', '20') | list}}"
+          # - "Select Filter with regex"
+          # - "{{names | selectattr('match','.+first.+:.+Sarav.+') | list}}"

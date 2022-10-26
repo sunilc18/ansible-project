@@ -1,0 +1,11 @@
+---
+-   hosts: all
+    vars_files:
+        -   variable_file.yaml
+    vars:
+        variable1: "Sunil"
+    tasks:
+        -   name: Variable values
+            debug: msg="{{ variable1 }} works in {{ work }} as an {{ employee_type }}"
+        -   name: Node Names
+            debug: msg="The node name is {{ ansible_nodename }}"

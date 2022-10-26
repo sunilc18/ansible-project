@@ -1,0 +1,13 @@
+---
+- name: Example5 of LineInFile
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Add string or lines after lineinfile
+      lineinfile:
+        path: /etc/apache2/apache2.conf
+        insertafter: "^Listen [0-9]+"
+        line: "Listen 443"
+        firstmatch: yes
+        state: present
+      register: lineinfileexample

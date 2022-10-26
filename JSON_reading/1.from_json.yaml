@@ -1,0 +1,38 @@
+--- 
+- name: ReadJSONfile
+  hosts: localhost
+  tasks:
+    - name: Display the JSON file content
+      shell: cat config.json
+      register: readjson
+
+    - name: Save the Json data to a Variable as a Fact
+      set_fact:
+        jsondata: "{{ readjson.stdout | from_json }}"
+
+    - name: setDomainName
+      set_fact:
+        domain_name: "{{ jsondata | json_query(jmesquery) }}"
+      vars:
+        jmesquery: 'domain.name'
+
+    - name: setDomainUsername
+      set_fact:
+        domain_username: "{{ jsondata | json_query(jmesquery) }}"
+      vars:
+        jmesquery: 'domain.user'
+
+    - name: setDomainPassword
+      set_fact:
+        domain_password: "{{ jsondata | json_query(jmesquery) }}"
+      vars:
+        jmesquery: 'domain.password'
+
+    - name: setadmin_listenPort
+      set_fact:
+        admin_listenport: "{{ jsondata | json_query(jmesquery) }}"
+      vars:
+        jmesquery: 'domain.admin.listenport'
+
+    - name: Debug the values
+      debug: msg=" Admin listen port => {{ admin_listenport }}, DomainName => {{ domain_name }}, DomainUserName => {{ domain_username }}, DomaninPassword => {{ domain_password }}  "

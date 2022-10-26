@@ -1,0 +1,13 @@
+---
+- name: Add Dictionary/Object to empty List
+  hosts: localhost
+  tasks:
+    - name: Empty Facts or Vars
+      set_fact:
+        userdata: []
+    - name: Add new record to Empty list
+      set_fact:
+        userdata: '{{ userdata + [ { "name" : "Sunil", "Mobile" : "9731269278" }, {"name" : "Anil", "Mobile" : "9731269270" } ] }}'
+      
+    - name: Print Data
+      debug: var=userdata

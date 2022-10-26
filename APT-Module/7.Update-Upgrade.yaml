@@ -1,0 +1,16 @@
+---
+- name: Ansible apt module 
+  hosts: localhost
+  become: yes 
+  tasks:
+    - name: Ansible Update Cache and Upgrade all package
+      register: updatesys
+      apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+        force_apt_get: true
+      
+    - name: Display the last line of the previous task to check the status
+      debug:
+        msg: "{{ updatesys.stdout_lines | last }}"

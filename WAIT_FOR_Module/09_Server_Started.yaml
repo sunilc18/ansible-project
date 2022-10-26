@@ -1,0 +1,15 @@
+---
+- name: Example09 of wait_for module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Validating the Server  state is Running
+      tags: validateserver
+      wait_for:
+        path: logs_path
+        search_regex: "The server started i Running mode"
+        delay: 10
+        timeout: 60
+        msg: "Not able to find the string running in the logfile"
+      when: ansible_hostname == "{{groups['all'][0]}}" and serverlogfile is defined
+      register: validatestart

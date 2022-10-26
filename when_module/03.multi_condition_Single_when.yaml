@@ -1,0 +1,10 @@
+---
+- name: Shutdown using when condition with multi parameter
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: Shutdown node with Ubuntu and its version.
+      shell: /sbin/shutdown -t now
+      when: 
+        - ansible_distribution  == "Ubuntu"
+        - ansible_distribution_major_version == "18"

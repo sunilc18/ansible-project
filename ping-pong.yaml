@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+    - name: Ping all servers
+      action: ping
+    - debug: msg="Server is up"
+  tasks:
+    - name: Execute shell cmdlet
+      shell: uname -a
+      register: uname_result
+    - debug: msg="{{ uname_result.stdout }}"

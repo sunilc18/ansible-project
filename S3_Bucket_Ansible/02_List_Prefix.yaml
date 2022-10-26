@@ -1,0 +1,13 @@
+---
+- name: Example02 of S3 bucket list with prefix
+  hosts: localhost
+  tasks:
+    - name: List keys with prefix
+      aws_s3:
+        bucket: sunilcbucket
+        mode: list
+        prefix: "test1/test1-subfolder/"
+      register: output
+
+    - debug:
+        msg="{{ output.s3_keys }}"

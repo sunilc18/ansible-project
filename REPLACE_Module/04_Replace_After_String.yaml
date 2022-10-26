@@ -1,0 +1,40 @@
+---
+  - name: Replace line in file examples
+    hosts: node1
+
+    handlers:
+      - name: restart apache
+        become: yes
+        become_user: root
+        service: name=httpd state=restarted
+
+    tasks:
+
+    - name: "Replacing all fox with fofo - Leaving the title untouched"
+      become: yes
+      become_user: root
+      replace: 
+        path: /var/www/html/index.html
+        regexp: 'fox'
+        replace: 'fofo'
+        after: "The Fox and Grape Story"
+        backup: yes 
+    
+    - name: "Naming our Hero and introduction line"
+      become: yes
+      become_user: root
+      replace: 
+        path: /var/www/html/index.html
+        regexp: 'A fofo was once'
+        replace: 'Once upon a time, There was a fox living in a forest named "fofo". One day fofo was'
+        backup: yes    
+    
+    - name: "Grammatical correction - The fofo to fofo"
+      become: yes
+      become_user: root
+      replace: 
+        path: /var/www/html/index.html
+        regexp: '[T|t]he fofo'
+        replace: 'fofo'
+        backup: yes    
+      notify: restart apache

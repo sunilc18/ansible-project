@@ -1,0 +1,31 @@
+---
+- name: "Using of when condition to install Golang after validating"
+  hosts: PRD
+  become: yes
+  become_user: root
+  vars:
+    - download_file: "https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz"
+    - dest_path: "/usr/local/"
+  tasks:
+    - name: "Determine if the Golang is installed"
+      register: GoVersion
+      shell: /usr/local/go/bin/go version
+      ignore_errors: true
+    - name: "Ensure Go is at the latest version"
+      unarchive:
+        src: "{{ item }}"
+        dest: "{{ dest_path }}"
+        mode: 0755
+        remote_src: yes
+      with_items: "{{ download_file }}"
+      when: GoVersion.rc != 0
+    - name: Copy path to the profile file
+      lineinfile:
+        path: /home/vagrant/.profile
+        line: "export GOPATH=$HOME/work"
+    - name: Copy path to the profile file
+      lineinfile:
+        path: /home/vagrant/.profile
+        line: "export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin"
+    - debug: msg="{{GoVersion}}"
+    

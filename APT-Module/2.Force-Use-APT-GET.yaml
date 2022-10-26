@@ -1,0 +1,13 @@
+---
+- name: Using APT-GET
+  hosts: localhost
+  become: yes 
+  tasks:
+    - name: Install nginx uisng APT-GET
+      apt:
+        name: nginx
+        state: present
+        force_apt_get: yes
+      register: installnginx
+    
+    - debug: msg="{{installnginx}}"

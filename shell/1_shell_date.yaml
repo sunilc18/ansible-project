@@ -1,0 +1,10 @@
+---
+-   name: Using of shell module
+    hosts: all
+    become: yes
+    tasks:
+      - name: Check Data with shell command
+        shell: "date"
+        register: datecmd
+        tags: datecommand
+      - debug: msg="{{datecmd.stdout}}"

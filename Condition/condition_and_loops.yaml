@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    system: "linux"
+    color: "Black"
+  tasks:
+    - debug: var=ansible_hostname
+    - debug: var=color
+    - debug: var=system
+      when: color == 'Blue'
+    - debug: msg='{{ item }}'
+      with_items:
+        - item1
+        - item2
+

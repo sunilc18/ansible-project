@@ -1,0 +1,11 @@
+---
+- name: Example01 of Ansible_hostname and Inventory_hostname difference
+  hosts: all
+  become: yes
+  # gather_facts: no # will NOT render the input for buit-in variable for Ansible_hostname
+  tasks:
+    - name: Display Hostnames
+      debug: var=inventory_hostname
+
+    - name: Display Hostnames
+      debug: var=ansible_hostname

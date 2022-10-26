@@ -1,0 +1,7 @@
+---
+- name: Example03 of Map filters
+  hosts: localhost
+  tasks:
+    - name: Extract filter with Ansible Map -Select based on indices
+      debug:
+        msg="{{ [0,2] | map('extract', ['Sarav', 'Hanu', 'Gopi']) | list }}"

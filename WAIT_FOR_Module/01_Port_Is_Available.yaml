@@ -1,0 +1,18 @@
+---
+- name: Example01 of wait_for module
+  hosts: node1
+  become: yes
+  vars:
+    - webserver_port: 21
+  tasks:
+    - name: Validating if the WebServer is UP and PORT is open.
+      wait_for:
+        host: "{{inventory_hostname}}"
+        port: "{{webserver_port}}"
+        delay: 10
+        timeout: 30
+        state: started
+        msg: "Server PORT is not listening" # Message will be printed during failure.
+      when: ansible_hostname == "{{inventory_hostname}}"
+      register: validation01
+      ignore_errors: true # this will NOT stop the execution of the playbook

@@ -1,0 +1,20 @@
+---
+-   name: Run bash script and ensure the apache2 service is started
+    hosts: all
+    become: yes
+    tasks:
+    -   name: Changes statement inside file
+        lineinfile:
+            path: /home/vagrant/apache.txt
+            line: "Checked web service is up and running"
+    -   name: Execute the bash script.
+        script: /home/vagrant/ansible-project/web_app/bash.sh
+    -   name: Web service started check
+        service:
+            name: apache2
+            state: started
+    # -   name: install Apache2
+    #     apt:
+    #         name: apache2
+    #         state: present
+

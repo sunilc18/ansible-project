@@ -1,0 +1,103 @@
+---
+- name: Example01 of Ansible Pre_task and Post_task
+  hosts: node2
+  # vars_files:
+  #   - gitsecret.yaml
+  vars:
+    - destdir: /apps/sampleapp
+    - gittoken: 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
+  # pre_tasks:
+  #   - name: Installing Package and its dependencies before starting app
+  #     become: yes
+  #     register: aptinstall
+  #     apt:
+  #       name:
+  #         - nodejs
+  #         - npm
+  #         - git
+  #       state: latest
+  #       # update_cache: yes
+  #   - name: Validate Package installation
+  #     debug: msg="Installation of node is successful"
+  #     when: aptinstall is changed
+
+  tasks:
+  #   - name: Version of NPM and Nodejs
+  #     shell:
+  #       "npm -v && nodejs -v"
+  #     register: versioninfo
+
+  #   - name: Validate if the installation is intact
+  #     assert:
+  #       that: "versioninfo is changed"
+
+  #   - name: Create Dest Directory if not exists
+  #     become: yes
+  #     file:
+  #       path: "{{ destdir }}"
+  #       state: directory
+  #       owner: vagrant
+  #       group: vagrant
+  #       mode: 0755
+
+  #   - name: Download the Nodejs code from GitRepo
+  #     become: yes
+  #     git:
+  #       repo: "https://{{gittoken}}@github.com/sunilc18/sampleproject-nodejs-ansible.git"
+  #       dest: "{{destdir}}"
+
+  #   - name: Change the ownership of the Directory
+  #     become: yes
+  #     file: 
+  #       path: "{{destdir}}"
+  #       owner: "vagrant"
+  #     register: chgrpout
+
+  #   - name: Install Dependencies with NPM install command
+  #     shell:
+  #       "npm install"
+  #     args:
+  #       chdir: "{{destdir}}"
+  #     register: npminstallout
+
+  #   - name: Debug npm install command
+  #     debug: msg="{{npminstallout}}"
+    
+  #   - name: Start the App
+  #     async: 10
+  #     poll: 0
+  #     shell:
+  #       "(node index.js > nodesrv.log 2>&1 &)"
+  #     args:
+  #       chdir: "{{destdir}}"
+  #     register: appstart
+
+    - name: Validating the port is open
+      tags: nodeValidate
+      wait_for:
+        host: "localhost"
+        port: 3000
+        delay: 10
+        timeout: 30
+        state: started
+        msg: "NodeJS server is not running"
+    
+  post_tasks:
+    - name: Notify Slack the server has been updated
+      tags: slack
+      slack:
+        token: T027MKJ8ML3/B0296MEC9B2/2Yw56S1EGM4R1BrktKdnM5sC
+        msg: |
+          ### StatusUpdate ###
+          --------------------------------------
+          ``
+          `Server`: {{ansible_host}}
+          `Status`: NodeJS Sample Application installed successfully
+          --------------------------------------
+        channel: '#sre-project'
+        color: good
+        username: 'Ansible on {{ inventory_hostname }}'
+        link_names: 0
+        parse: 'none'
+      delegate_to: localhost
+

@@ -1,0 +1,10 @@
+---
+- name: 'nested loop using with_nested'
+  hosts: localhost
+  become: yes
+  tasks:
+    -   name: file permission
+        shell: chmod -R '{{ item[0] }}' '{{ item[1] }}'
+        with_nested:
+          - ['700']
+          - ['/tmp/test']

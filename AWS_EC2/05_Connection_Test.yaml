@@ -1,0 +1,12 @@
+---
+- name: SSH to EC2
+  hosts: localhost
+  tasks:
+    - name: Wait for SSH to come up
+      local_action:
+        module: wait_for
+        host: 3.136.37.128
+        port: 22
+        delay: 10
+        timeout: 120
+      # loop: "{{ ec2.instances }}"

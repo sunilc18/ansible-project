@@ -1,0 +1,9 @@
+---
+-   name: Loops
+    hosts: all
+    tasks:
+      - command: 'echo name="{{ item }}"'
+        loop:
+          - sunil
+          - ayyappa
+          - saranya

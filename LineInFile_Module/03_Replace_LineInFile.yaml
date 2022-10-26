@@ -1,0 +1,24 @@
+---
+- name: Example3 LineInFile module
+  hosts: node1
+  become: yes
+  tasks:
+    - name: Replace String or Line using LineInFile module
+      tags: example2
+      lineinfile:
+        path: /etc/apache2/test-apache2.conf
+        # String to search
+        regexp: "Require user vagrant"
+        # String to replace
+        line: "Require user VAGRANT"
+        backup: yes
+        state: present
+      
+
+    - name: Get file
+      shell:
+        "cat /etc/apache2/test-apache2.conf"
+      register: example2out
+
+    - name: Display output
+      debug: var=example2out

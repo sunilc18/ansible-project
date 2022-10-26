@@ -1,0 +1,27 @@
+---
+-
+    name: Variables using var files
+    hosts: all
+    become: yes
+    vars_files:
+        -   var_file.yaml
+    tasks:
+    -   firewalld:
+            service: apache2
+            permanent: yes
+            state: enabled
+
+    -   firewalld:
+            port: {{ http_port }}/tcp
+            permanent: yes
+            state: enabled
+
+    -   firewalld:
+            port: {{ snmp_port }}/udp
+            permanent: yes
+            state: disabled
+
+    -   firewalld:
+            source: {{ inter_ip_range }}/24
+            zonet: yes
+            state: enabled

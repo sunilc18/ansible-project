@@ -1,0 +1,19 @@
+---
+- name: A playbook to test Async and Poll
+  hosts: node1
+  remote_user: vagrant
+  tasks:
+    - name: Copy the script to remote host
+      copy:
+        src: "longrunningscript.sh" # the file present on same directory
+        dest: "/tmp"
+
+    - name: Execute the script
+      shell:
+        "chmod a+x /tmp/longrunningscript.sh && /tmp/longrunningscript.sh 60" # Run for 60 seconds
+      async: 180 # Max allowed time in Seconds
+      poll: 0 # Polling Intreval in Seconds
+      register: scrout
+
+    - name: Some task just to debug
+      debug: var="scrout.stdout_lines"

@@ -1,0 +1,10 @@
+---
+- name: Ansible interpoltaion
+  hosts: PRD
+  become: yes
+  tasks:
+    - name: Find Directory and its files older than x number of days
+      register: findfiles
+      shell:
+        find "{{ Dir }}" -type f -name "{{ FileExt }}" -mtime -"{{DaysOld}}"
+    - debug: msg="{{findfiles.stdout_lines}}"

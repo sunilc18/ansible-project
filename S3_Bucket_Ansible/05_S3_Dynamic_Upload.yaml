@@ -1,0 +1,23 @@
+---
+- name: AWS S3 Bucket Upload - Ansible
+  hosts: localhost
+  tasks:
+    - name: List Desktop and save the output to register variable
+      shell: "ls -lrt /home/vagrant/"
+      register: dirlist
+    
+    - name: Save the output to Content varible
+      set_fact: 
+        contents: "{{dirlist.stdout_lines}}"
+      when: dirlist.changed
+    
+    - name: Display the Content before Writing
+      debug: msg="{{contents}}"
+    - name: Upload/PUT file to S3 bucket
+      aws_s3:
+        # profile: personal
+        bucket: sunilcbucket
+        object: "test1/test1-subfolder/Desktop_Dir_list.txt"
+        content: "{{ lookup('template', 'directorylist.yml.j2') }}"  # content not support as jinja2 not installed
+        mode: put
+      register: putresult

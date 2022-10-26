@@ -1,0 +1,15 @@
+---
+- name: Example01 of firewalld module
+  hosts: node1
+  # connection: local # to run on local machine
+  become: yes
+  tasks:
+    - name: Validate on Remote server.
+      firewalld:
+        permanent: yes
+        immediate: yes
+        service: "{{item}}"
+        state: enabled
+      with_items:
+        - http
+        - https  

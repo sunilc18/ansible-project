@@ -1,0 +1,11 @@
+---
+-   name: 'Add server IP into the file'
+    hosts: all
+    tasks:
+      -   
+          shell: 'cat /home/vagrant/apache.txt'
+          register: "command_output"
+
+      -   
+          shell: 'echo "new dns server 10.0.0.2" >> /home/vagrant/apache.txt'
+          when: command_output.stdout.find('10.0.0.3') == -1
